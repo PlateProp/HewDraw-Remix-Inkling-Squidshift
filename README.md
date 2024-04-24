@@ -7,6 +7,7 @@ Ground to Air Momentum:
 
 Dash: 
 Run Transition Frame: 7 > 9
+
 Dash Speed: 1.525 > 1.425
 
 Run:
