@@ -6,12 +6,12 @@
     </struct>
   </list>
   <struct hash="param_private">
-    <float hash="charge_ink">1.5</float>
+    <float hash="charge_ink">1.55</float>
     <float hash="sub_ink_attack_s4">25</float>
     <float hash="sub_ink_attack_hi4">30</float>
     <float hash="sub_ink_attack_lw4">35</float>
     <float hash="sub_ink_throw_f">15</float>
-    <float hash="sub_ink_special_n">7.5</float>
+    <float hash="sub_ink_special_n">6.5</float>
     <float hash="sub_ink_special_s">4</float>
     <float hash="sub_ink_special_lw">48</float>
   </struct>
