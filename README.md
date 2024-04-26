@@ -21,11 +21,13 @@ By canceling Inkling's turnaround at certain points, they can boost themseves us
 Initial window is frames 1-4 for a Reverse Squidshift, and frames 17-20 for a regular Squidshift. Canceling outside of these windows will result in minimal boost. 
 
 Ground Brake:
-0.065>0.063
+0.065>0.061
 
-Ink Charge > Ink gain 1.55 > 1.5
 
 SMASHES:
+
+Fsmash:
+Active Frames: 16-17 > 15-18
 
 Usmash: 
 Active f18-19 > f17>20
@@ -39,16 +41,18 @@ Ink cost increased 25 > 35
 TILTS:
 
 Utilt :
-Active Frames: 7-17 > 8-14
+Reverse Squidshift distance capped
 
 Dtilt:
-Reverse Squidshift distance capped at 5 blocks
+Reverse Squidshift distance capped
 
 AERIALS:
 
 Nair:
 active f5-19 > f5-15
 Body hitbox size reverted
+Angle f5-9: 55
+Angle f10-15: 361
 
 Bair:
 Active Frames > 6-17 > 6-12.
@@ -79,7 +83,7 @@ Ink cost ? > 48
 THROWS:
 
 Grab:
-Reverse Squidshift distance capped at 5 blocks
+Reverse Squidshift distance capped
 
 Fthrow:
 Ink Applied: 80>90
@@ -92,7 +96,6 @@ Uthrow:
 Cancel Frame: 33>34
 
 Bthrow:
-Release Frame: 17 > 20
 Bkb: 70 > 55
 
 
