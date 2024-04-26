@@ -29,11 +29,18 @@ SMASHES:
 Fsmash:
 Active Frames: 16-17 > 15-18
 
+FAF: 56 > 53
+
 Usmash: 
 Active f18-19 > f17>20
+
 KBG 82>87 sweetspot
+
 KBG 100>105 sourspot
+
 BKB 55>60
+
+FAF: 60 > 55
 
 Dsmash: 
 Ink cost increased 25 > 35
@@ -50,30 +57,42 @@ AERIALS:
 
 Nair:
 active f5-19 > f5-15
+
 Body hitbox size reverted
+
 Angle f5-9: 55
+
 Angle f10-15: 361
 
 Bair:
 Active Frames > 6-17 > 6-12.
+
 Weak hitbox removed
 
 Fair:
-Active Frames > f10-20 > f10-16, 
-kbg 118>110 
-Hip hitbox dmg 7.0% > 12.0%
+Active Frames > 10-20 > 10-16 
+
+kbg: 118>110
+
+Hip hitbox dmg: 7.0% > 12.0%
+
+Hip hitbox size: 3.5 > 4.0
 
 
 SPECIALS:
 
 Neutral B:
 Ink cost per shot 2 > 7.5
+
 Max Angle Change per Frame on Rapid Fire 2.5 > 2
+
 Prevent excess momentum from Squidshifts on the ground
+
 Air momentum now retained instead of halting
 
 Side B:
 Ink cost: 5 > 4
+
 Max Run Speed on Ground/Air: 2 > 1.8
 
 Down B:
