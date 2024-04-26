@@ -13,7 +13,7 @@
     <float hash="sub_ink_throw_f">15</float>
     <float hash="sub_ink_special_n">6.5</float>
     <float hash="sub_ink_special_s">4</float>
-    <float hash="sub_ink_special_lw">48</float>
+    <float hash="sub_ink_special_lw">46</float>
   </struct>
   <list hash="param_special_n">
     <struct index="0">
