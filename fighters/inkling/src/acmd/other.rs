@@ -1,6 +1,6 @@
 use super::*;
 use globals::*;
-pub const BRAKE_FRAME: f32 = 9.0;
+pub const BRAKE_FRAME: f32 = 7.0;
 pub const SQUID_FRAME: f32 = 22.0;
 
 unsafe extern "C" fn game_turnrun(agent: &mut L2CAgentBase) {

@@ -17,7 +17,7 @@ guard_off:
     cancel_frame: 12
 throw_f:
   extra:
-    cancel_frame: 38
+    cancel_frame: 34
 throw_lw:
   extra:
     cancel_frame: 37

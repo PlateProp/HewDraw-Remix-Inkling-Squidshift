@@ -110,7 +110,7 @@ pub unsafe fn squidshift(fighter: &mut L2CFighterCommon) {
         let frame = MotionModule::frame(boma);
 
         let turn_frame = 10.0; //could probably set a custom ACMD flag for this instead of making it hard coded. end_frame doesn't quite work here
-        if frame >= 1.0 && frame < 23.0 {
+         if frame >= 1.0 && frame < 23.0 {
             if kinetic_type != *FIGHTER_KINETIC_TYPE_MOTION {
                 KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_MOTION);
                 KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
@@ -121,7 +121,7 @@ pub unsafe fn squidshift(fighter: &mut L2CFighterCommon) {
                     fighter,
                     FIGHTER_KINETIC_ENERGY_ID_MOTION,
                     ENERGY_MOTION_RESET_TYPE_GROUND_TRANS,
-                    sum_x,
+                    sum_x * 1.28,
                     0.0,
                     0.0,
                     0.0,
@@ -197,6 +197,7 @@ pub unsafe fn moveset(fighter: &mut L2CFighterCommon, boma: &mut BattleObjectMod
     special_hi_rot_exec(boma, status_kind);
     roller_jump_cancel(boma);
     ink_charge_cancel(boma);
+    game_specialhiattack(boma, status_kind);
     fastfall_specials(fighter);
     squidshift(fighter);
 }

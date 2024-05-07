@@ -27,7 +27,7 @@ unsafe extern "C" fn game_attackhi3(agent: &mut L2CAgentBase) {
         KineticModule::change_kinetic(agent.module_accessor, kinetic);
         sv_kinetic_energy!(reset_energy, agent, FIGHTER_KINETIC_ENERGY_ID_STOP, ENERGY_STOP_RESET_TYPE_GROUND, 0.0, 0.0, 0.0, 0.0, 0.0);
         sv_kinetic_energy!(set_speed, agent, FIGHTER_KINETIC_ENERGY_ID_STOP, speed_x * 0.8, 0.0);
-        sv_kinetic_energy!(set_accel, agent, FIGHTER_KINETIC_ENERGY_ID_STOP, -0.45 * lr, 0.0);
+        sv_kinetic_energy!(set_accel, agent, FIGHTER_KINETIC_ENERGY_ID_STOP, -0.5 * lr, 0.0);
         sv_kinetic_energy!(reset_energy, agent, FIGHTER_KINETIC_ENERGY_ID_MOTION, ENERGY_MOTION_RESET_TYPE_GROUND_TRANS);
         KineticModule::enable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
     }
@@ -88,7 +88,7 @@ unsafe extern "C" fn game_attacklw3(agent: &mut L2CAgentBase) {
         KineticModule::change_kinetic(agent.module_accessor, kinetic);
         sv_kinetic_energy!(reset_energy, agent, FIGHTER_KINETIC_ENERGY_ID_STOP, ENERGY_STOP_RESET_TYPE_GROUND, 0.0, 0.0, 0.0, 0.0, 0.0);
         sv_kinetic_energy!(set_speed, agent, FIGHTER_KINETIC_ENERGY_ID_STOP, speed_x * 0.8, 0.0);
-        sv_kinetic_energy!(set_accel, agent, FIGHTER_KINETIC_ENERGY_ID_STOP, -0.47 * lr, 0.0);
+        sv_kinetic_energy!(set_accel, agent, FIGHTER_KINETIC_ENERGY_ID_STOP, -0.5 * lr, 0.0);
         sv_kinetic_energy!(reset_energy, agent, FIGHTER_KINETIC_ENERGY_ID_MOTION, ENERGY_MOTION_RESET_TYPE_GROUND_TRANS);
         KineticModule::enable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
     }
