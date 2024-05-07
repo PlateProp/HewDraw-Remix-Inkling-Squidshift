@@ -44,7 +44,7 @@ attack_dash:
     cancel_frame: 35
 attack_s4_s:
   extra:
-    cancel_frame: 50
+    cancel_frame: 47
 attack_s3_s:
   extra:
     cancel_frame: 34
