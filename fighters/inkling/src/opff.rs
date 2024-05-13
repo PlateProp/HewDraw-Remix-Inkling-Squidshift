@@ -108,26 +108,29 @@ pub unsafe fn squidshift(fighter: &mut L2CFighterCommon) {
     if StatusModule::status_kind(boma) == *FIGHTER_STATUS_KIND_TURN_RUN {
         let kinetic_type = KineticModule::get_kinetic_type(boma);
         let frame = MotionModule::frame(boma);
+        let sum_x = KineticModule::get_sum_speed_x(fighter.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
 
         let turn_frame = 10.0; //could probably set a custom ACMD flag for this instead of making it hard coded. end_frame doesn't quite work here
-         if frame >= 1.0 && frame < 23.0 {
+         if frame >= 1.0 && frame <= 21.0 {
             if kinetic_type != *FIGHTER_KINETIC_TYPE_MOTION {
                 KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_MOTION);
                 KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
                 MotionModule::set_trans_move_speed_no_scale(fighter.module_accessor, true);
-                let sum_x = KineticModule::get_sum_speed_x(fighter.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
                 sv_kinetic_energy!(
                     reset_energy,
                     fighter,
                     FIGHTER_KINETIC_ENERGY_ID_MOTION,
                     ENERGY_MOTION_RESET_TYPE_GROUND_TRANS,
-                    sum_x * 1.28,
+                    sum_x.abs() * 1.28,
                     0.0,
                     0.0,
                     0.0,
                     0.0
                 );
             }
+        }
+        if frame <= 22.0 {
+            sv_kinetic_energy!(reset_energy, fighter, FIGHTER_KINETIC_ENERGY_ID_MOTION, ENERGY_MOTION_RESET_TYPE_GROUND_TRANS, sum_x * 1.0, 0.0, 0.0, 0.0, 0.0);
         }
         if (frame >= turn_frame) {
             if kinetic_type != *FIGHTER_KINETIC_TYPE_TURN_RUN {

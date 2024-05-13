@@ -11,7 +11,7 @@ pub unsafe extern "C" fn special_hi_rot_exec(fighter: &mut L2CFighterCommon) -> 
     if sum_y < 1.0 && !attacked{
         if VarModule::is_flag(fighter.battle_object,vars::inkling::instance::SPECIAL_HI_CAN_ATTACK){
             let fighter_ptr = fighter.global_table[0x4].get_ptr() as *mut Fighter;
-            let ink_cost = WorkModule::get_param_float(fighter.module_accessor, hash40("param_private"), hash40("ink_max"))/2.0;
+            let ink_cost = WorkModule::get_param_float(fighter.module_accessor, hash40("param_private"), hash40("ink_max"))/1.57;
             let can_max_shot = super::spend_ink(fighter,ink_cost);
             if can_max_shot {
                 VarModule::on_flag(fighter.battle_object,vars::inkling::status::SPECIAL_HI_ATTACK);
