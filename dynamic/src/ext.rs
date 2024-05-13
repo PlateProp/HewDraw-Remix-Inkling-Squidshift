@@ -1,4 +1,4 @@
-use crate::consts::globals::*;
+use crate::consts::{globals::*, vars};
 use bitflags::bitflags;
 use modular_bitfield::specifiers::*;
 use smash::app::{
@@ -318,6 +318,7 @@ bitflags! {
         const Parry = 0x100000;
         const CStickOverride = 0x200000;
         const RivalsWallJump = 0x400000;
+        const ParryManual = 0x800000;
 
         const SpecialAll  = 0x20802;
         const AttackAll   = 0x201;
@@ -510,6 +511,8 @@ pub trait BomaExt {
     unsafe fn check_airdodge_cancel(&mut self) -> bool;
     // Checks for status and enables transition to dash
     unsafe fn check_dash_cancel(&mut self) -> bool;
+    // Checks for status and enables transition to wall jump
+    unsafe fn check_wall_jump_cancel(&mut self) -> bool;
 
     /// check for hitfall (should be called once per frame)
     unsafe fn check_hitfall(&mut self);
@@ -1051,6 +1054,20 @@ impl BomaExt for BattleObjectModuleAccessor {
         false
     }
 
+    unsafe fn check_wall_jump_cancel(&mut self) -> bool {
+        if crate::VarModule::is_flag(self.object(), vars::common::instance::SPECIAL_WALL_JUMP) {
+            return false;
+        }
+        crate::VarModule::on_flag(self.object(), vars::common::status::ENABLE_SPECIAL_WALLJUMP);
+        let fighter = crate::util::get_fighter_common_from_accessor(self);
+        if fighter.sub_transition_group_check_air_wall_jump().get_bool() {
+            crate::VarModule::on_flag(self.object(), vars::common::instance::SPECIAL_WALL_JUMP);
+            return true;
+        }
+        crate::VarModule::off_flag(self.object(), vars::common::status::ENABLE_SPECIAL_WALLJUMP);
+        false
+    }
+
     /// Sets the position of the front/red ledge-grab box (see [`set_center_cliff_hangdata`](BomaExt::set_center_cliff_hangdata) for more information)
     ///
     /// # Arguments
@@ -1224,7 +1241,11 @@ impl BomaExt for BattleObjectModuleAccessor {
             );
         }
 
-        CancelModule::enable_cancel(self);
+        if self.motion_frame() >= 4.0
+        && !CancelModule::is_enable_cancel(self) {
+            CancelModule::enable_cancel(self);
+        }
+
         if self.is_situation(*SITUATION_KIND_AIR) {
             let fighter = crate::util::get_fighter_common_from_accessor(self);
             fighter.sub_air_check_fall_common();
@@ -1297,8 +1318,27 @@ impl BomaExt for BattleObjectModuleAccessor {
     }
 
     unsafe fn is_parry_input(&mut self) -> bool {
-        let buffer = if self.is_prev_status(*FIGHTER_STATUS_KIND_GUARD_DAMAGE) { 1 } else { 5 };
-        return InputModule::get_trigger_count(self.object(), Buttons::Parry) < buffer;
+        let buffer = if self.is_prev_status(*FIGHTER_STATUS_KIND_GUARD_DAMAGE) { 1 } else { ControlModule::get_command_life_count_max(self) } as usize;
+        // actual parry button -- if this is in buffer, it's a parry
+        let parry_trigger_count = InputModule::get_trigger_count(self.object(), Buttons::Parry);
+        if parry_trigger_count < buffer {
+            return true;
+        }
+
+        let guard_trigger_count = InputModule::get_trigger_count(self.object(), Buttons::Guard);
+        let guard_release_count = InputModule::get_release_count(self.object(), Buttons::Guard);
+        let is_guard_held = ControlModule::check_button_on(self, *CONTROL_PAD_BUTTON_GUARD);
+
+        // special checks for manual parry
+        // - manual parry button must be in the buffer window
+        // - manual parry button must have been pressed while shield was pressed/held
+        let parry_manual_trigger_count = InputModule::get_trigger_count(self.object(), Buttons::ParryManual);
+        if parry_manual_trigger_count < buffer 
+        && parry_manual_trigger_count <= guard_trigger_count
+        && (is_guard_held || parry_manual_trigger_count > guard_release_count) {
+            return true;
+        }
+        return false;
     }
 }
 

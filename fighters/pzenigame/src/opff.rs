@@ -46,41 +46,6 @@ unsafe fn withdraw_jc(boma: &mut BattleObjectModuleAccessor, id: usize, status_k
     }
 }
 
-pub unsafe fn squidshift(fighter: &mut L2CFighterCommon) {
-    let boma = fighter.module_accessor;
-    if StatusModule::status_kind(boma) == *FIGHTER_STATUS_KIND_TURN_RUN {
-        let kinetic_type = KineticModule::get_kinetic_type(boma);
-        let frame = MotionModule::frame(boma);
-
-        let turn_frame = 10.0; //could probably set a custom ACMD flag for this instead of making it hard coded. end_frame doesn't quite work here
-        if frame >= 1.0 && frame <= 22.0 {
-            if kinetic_type != *FIGHTER_KINETIC_TYPE_MOTION {
-                KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_MOTION);
-                KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
-                MotionModule::set_trans_move_speed_no_scale(fighter.module_accessor, true);
-                let sum_x = KineticModule::get_sum_speed_x(fighter.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
-                sv_kinetic_energy!(
-                    reset_energy,
-                    fighter,
-                    FIGHTER_KINETIC_ENERGY_ID_MOTION,
-                    ENERGY_MOTION_RESET_TYPE_GROUND_TRANS,
-                    sum_x,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0
-                );
-            }
-        }
-        if (frame >= turn_frame) {
-            if kinetic_type != *FIGHTER_KINETIC_TYPE_TURN_RUN {
-                KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_TURN_RUN);
-            }
-        }
-    }
-}
-
-
 unsafe fn fastfall_specials(fighter: &mut L2CFighterCommon) {
     if !fighter.is_in_hitlag()
     && !StatusModule::is_changing(fighter.module_accessor)
@@ -127,7 +92,6 @@ pub unsafe fn moveset(fighter: &mut L2CFighterCommon, boma: &mut BattleObjectMod
     nspecial_cancels(boma, status_kind, situation_kind, cat[0]);
     fastfall_specials(fighter);
     special_lw_track(boma);
-    squidshift(fighter);
 }
 
 pub extern "C" fn pzenigame_frame_wrapper(fighter: &mut smash::lua2cpp::L2CFighterCommon) {

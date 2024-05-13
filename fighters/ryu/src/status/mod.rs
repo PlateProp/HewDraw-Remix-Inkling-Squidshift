@@ -2,6 +2,7 @@ use super::*;
 use globals::*;
 // status script import
 
+mod attack_air;
 mod attack;
 mod dash;
 mod wait;
@@ -169,7 +170,13 @@ unsafe extern "C" fn change_status_callback(fighter: &mut L2CFighterCommon) -> L
     }
 
     if fighter.global_table[globals::STATUS_KIND] == FIGHTER_STATUS_KIND_JUMP_SQUAT {
-        if fighter.global_table[globals::STATUS_KIND_INTERRUPT] != FIGHTER_STATUS_KIND_TURN_RUN {
+        if ![
+            *FIGHTER_STATUS_KIND_RUN,
+            *FIGHTER_STATUS_KIND_TURN_DASH,
+            *FIGHTER_STATUS_KIND_TURN_RUN,
+            *FIGHTER_RYU_STATUS_KIND_DASH_BACK,
+            *FIGHTER_RYU_STATUS_KIND_TURN_RUN_BACK,
+        ].contains(&fighter.global_table[globals::STATUS_KIND_INTERRUPT].get_i32()) {
             update_lr(fighter, lr);
         }
         return 0.into();
@@ -245,6 +252,7 @@ pub unsafe extern "C" fn ryu_check_special_command(fighter: &mut L2CFighterCommo
 
     // the supers
     if is_special
+    && fighter.is_situation(*SITUATION_KIND_GROUND)
     && cat4 & *FIGHTER_PAD_CMD_CAT4_FLAG_SUPER_SPECIAL_COMMAND != 0
     && WorkModule::is_enable_transition_term(fighter.module_accessor, *FIGHTER_STATUS_TRANSITION_TERM_ID_CONT_SPECIAL_N_COMMAND) {
         if VarModule::is_flag(fighter.battle_object, vars::shotos::instance::IS_MAGIC_SERIES_CANCEL) {
@@ -295,6 +303,7 @@ unsafe extern "C" fn on_start(fighter: &mut L2CFighterCommon) {
 pub fn install(agent: &mut Agent) {
     agent.on_start(on_start);
 
+    attack_air::install(agent);
     attack::install(agent);
     dash::install(agent);
     wait::install(agent);

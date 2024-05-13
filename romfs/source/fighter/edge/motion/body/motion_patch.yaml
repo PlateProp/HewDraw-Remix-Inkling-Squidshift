@@ -23,10 +23,10 @@ throw_hi:
     cancel_frame: 41
 attack_12:
   extra:
-    cancel_frame: 19
+    cancel_frame: 21
 attack_11:
   extra:
-    cancel_frame: 18
+    cancel_frame: 20
 attack_lw3:
   extra:
     cancel_frame: 42
@@ -72,6 +72,12 @@ special_n2:
 special_air_n2:
   extra:
     cancel_frame: 60
+special_lw_hit:
+  extra:
+    cancel_frame: 37
+special_air_lw_hit:
+  extra:
+    cancel_frame: 37
 item_light_throw_f:
   flags:
     move: false

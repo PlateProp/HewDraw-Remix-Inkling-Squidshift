@@ -80,7 +80,6 @@ unsafe extern "C" fn game_ridleyspecialairnexplode(agent: &mut L2CAgentBase) {
     if is_excute(agent) {
         HIT_NODE(agent, Hash40::new("head"), *HIT_STATUS_NORMAL);
         HIT_NODE(agent, Hash40::new("mouth1"), *HIT_STATUS_NORMAL);
-        HIT_NODE(agent, Hash40::new("virtualweakpoint"), *HIT_STATUS_OFF);
         ATTACK(agent, 0, 0, Hash40::new("top"), 20.0, 361, 80, 0, 58, 9.0, 0.0, 8.0, 14.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_fire"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_FIRE, *ATTACK_REGION_BOMB);
     }
     wait(lua_state, 4.0);
@@ -135,33 +134,40 @@ unsafe extern "C" fn expression_ridleyspecialairnexplode(agent: &mut L2CAgentBas
 }
 
 pub fn install(agent: &mut Agent) {
-    agent.acmd("game_ridleyspecialnexplode", game_ridleyspecialnexplode);
+    agent.acmd("game_ridleyspecialnexplode", game_ridleyspecialnexplode, Priority::Low);
     agent.acmd(
         "effect_ridleyspecialnexplode",
         effect_ridleyspecialnexplode,
+        Priority::Low
     );
     agent.acmd(
         "sound_ridleyspecialnexplode",
         sound_ridleyspecialnexplode,
+        Priority::Low
     );
     agent.acmd(
         "expression_ridleyspecialnexplode",
         expression_ridleyspecialnexplode,
+        Priority::Low
     );
     agent.acmd(
         "game_ridleyspecialairnexplode",
         game_ridleyspecialairnexplode,
+        Priority::Low
     );
     agent.acmd(
         "effect_ridleyspecialairnexplode",
         effect_ridleyspecialairnexplode,
+        Priority::Low
     );
     agent.acmd(
         "sound_ridleyspecialairnexplode",
         sound_ridleyspecialairnexplode,
+        Priority::Low
     );
     agent.acmd(
         "expression_ridleyspecialairnexplode",
         expression_ridleyspecialairnexplode,
+        Priority::Low
     );
 }

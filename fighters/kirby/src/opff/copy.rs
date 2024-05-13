@@ -723,16 +723,10 @@ unsafe fn sheik_nspecial_cancels(fighter: &mut L2CFighterCommon, boma: &mut Batt
 }
 
 // Mewtwo
-unsafe fn mewtwo_nspecial_cancels(boma: &mut BattleObjectModuleAccessor, status_kind: i32, situation_kind: i32) {
-    if status_kind == *FIGHTER_KIRBY_STATUS_KIND_MEWTWO_SPECIAL_N_CANCEL {
-        if situation_kind == *SITUATION_KIND_AIR {
-            if WorkModule::get_int(boma, *FIGHTER_MEWTWO_SPECIAL_N_STATUS_WORK_ID_INT_CANCEL_STATUS) == *FIGHTER_STATUS_KIND_ESCAPE_AIR {
-                WorkModule::set_int(boma, *STATUS_KIND_NONE, *FIGHTER_MEWTWO_SPECIAL_N_STATUS_WORK_ID_INT_CANCEL_STATUS);
-            }
-            if MotionModule::is_end(boma) {
-                StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_FALL_AERIAL, false);
-            }
-        }
+unsafe fn mewtwo_nspecial_cancels(boma: &mut BattleObjectModuleAccessor) {
+    if boma.is_motion(Hash40::new("mewtwo_special_air_n_cancel")) 
+    && WorkModule::get_int(boma, *FIGHTER_MEWTWO_SPECIAL_N_STATUS_WORK_ID_INT_CANCEL_STATUS) == *FIGHTER_STATUS_KIND_ESCAPE_AIR {
+        WorkModule::set_int(boma, *STATUS_KIND_NONE, *FIGHTER_MEWTWO_SPECIAL_N_STATUS_WORK_ID_INT_CANCEL_STATUS);
     }
 }
 
@@ -1016,6 +1010,12 @@ unsafe fn packun_ptooie_scale(boma: &mut BattleObjectModuleAccessor) {
 }
 
 pub unsafe fn kirby_copy_handler(fighter: &mut L2CFighterCommon, boma: &mut BattleObjectModuleAccessor, id: usize, cat: [i32 ; 4], status_kind: i32, situation_kind: i32, motion_kind: u64, stick_x: f32, stick_y: f32, facing: f32, frame: f32) {
+    let inhaledstatus = StatusModule::status_kind(fighter.module_accessor);
+    // enable copying flags when inhaling an opponent
+    if (0x1e3..0x1f1).contains(&inhaledstatus) {
+        packun_ptooie_stance(fighter, boma, status_kind);
+        return;
+    }
     if !WorkModule::is_flag(boma, *FIGHTER_KIRBY_INSTANCE_WORK_ID_FLAG_COPY) {
         reset_flags(fighter, boma, status_kind, situation_kind);
         return;
@@ -1124,7 +1124,7 @@ pub unsafe fn kirby_copy_handler(fighter: &mut L2CFighterCommon, boma: &mut Batt
         // Sheik
         0x10 => sheik_nspecial_cancels(fighter, boma, status_kind, situation_kind),
         // Mewtwo
-        0x19 => mewtwo_nspecial_cancels(boma, status_kind, situation_kind),
+        0x19 => mewtwo_nspecial_cancels(boma),
         // Squirtle
         0x24 => pzenigame_nspecial_cancels(boma, status_kind, situation_kind, cat[1]),
         // Lucario

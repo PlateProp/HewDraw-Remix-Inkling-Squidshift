@@ -32,7 +32,7 @@ unsafe extern "C" fn effect_specials2hi(agent: &mut L2CAgentBase) {
         FLASH(agent, 0, 0.24, 1, 0.7);
         EFFECT_FOLLOW(agent, Hash40::new("marth_sword_blue"), Hash40::new("haver"), 0, 0, 0, 0, 0, 0, 1, true);
     }
-    frame(lua_state, 4.0);
+    frame(lua_state, 5.0);
     if is_excute(agent) {
         LANDING_EFFECT(agent, Hash40::new("sys_atk_smoke"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 0.800000012, 0, 0, 0, 0, 0, 0, false);
         EFFECT_FOLLOW(agent, Hash40::new("marth_mc_2hi"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 1, true);
@@ -86,7 +86,7 @@ unsafe extern "C" fn effect_specials2lw(agent: &mut L2CAgentBase) {
     frame(lua_state, 5.0);
     if is_excute(agent) {
         LANDING_EFFECT(agent, Hash40::new("sys_atk_smoke"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, false);
-        EFFECT_FOLLOW(agent, Hash40::new("marth_mc_2lw"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 1, true);
+        EFFECT_FOLLOW(agent, Hash40::new("marth_mc_2lw"), Hash40::new("top"), 0, 0, 5, 0, 0, 0, 1, true);
         EffectModule::set_disable_render_offset_last(boma);
     }
     frame(lua_state, 7.0);
@@ -100,13 +100,13 @@ unsafe extern "C" fn effect_specials2lw(agent: &mut L2CAgentBase) {
 }
 
 pub fn install(agent: &mut Agent) {
-    agent.acmd("game_specials2hi", game_specials2hi);
-    agent.acmd("game_specialairs2hi", game_specials2hi);
-    agent.acmd("effect_specials2hi", effect_specials2hi);
-    agent.acmd("effect_specialairs2hi", effect_specials2hi);
+    agent.acmd("game_specials2hi", game_specials2hi, Priority::Low);
+    agent.acmd("game_specialairs2hi", game_specials2hi, Priority::Low);
+    agent.acmd("effect_specials2hi", effect_specials2hi, Priority::Low);
+    agent.acmd("effect_specialairs2hi", effect_specials2hi, Priority::Low);
 
-    agent.acmd("game_specials2lw", game_specials2lw);
-    agent.acmd("game_specialairs2lw", game_specials2lw);
-    agent.acmd("effect_specials2lw", effect_specials2lw);
-    agent.acmd("effect_specialairs2lw", effect_specials2lw);
+    agent.acmd("game_specials2lw", game_specials2lw, Priority::Low);
+    agent.acmd("game_specialairs2lw", game_specials2lw, Priority::Low);
+    agent.acmd("effect_specials2lw", effect_specials2lw, Priority::Low);
+    agent.acmd("effect_specialairs2lw", effect_specials2lw, Priority::Low);
 }

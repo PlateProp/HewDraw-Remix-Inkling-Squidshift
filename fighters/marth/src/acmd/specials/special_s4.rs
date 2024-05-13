@@ -41,7 +41,7 @@ unsafe extern "C" fn effect_specials4s(agent: &mut L2CAgentBase) {
     frame(lua_state, 7.0);
     if is_excute(agent) {
         LANDING_EFFECT(agent, Hash40::new("sys_h_smoke_b"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, false);
-        EFFECT_FOLLOW(agent, Hash40::new("marth_mc_4s"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 1, true);
+        EFFECT_FOLLOW(agent, Hash40::new("marth_mc_4s"), Hash40::new("top"), 0, 0, 4, 0, 0, 0, 1, true);
         EffectModule::set_disable_render_offset_last(boma);
     }
     frame(lua_state, 9.0);
@@ -107,12 +107,12 @@ unsafe extern "C" fn effect_specials4lw(agent: &mut L2CAgentBase) {
 }
 
 pub fn install(agent: &mut Agent) {
-    agent.acmd("effect_specials4hi", effect_specials4hi);
-    agent.acmd("effect_specialairs4hi", effect_specials4hi);
+    agent.acmd("effect_specials4hi", effect_specials4hi, Priority::Low);
+    agent.acmd("effect_specialairs4hi", effect_specials4hi, Priority::Low);
 
-    agent.acmd("effect_specials4s", effect_specials4s);
-    agent.acmd("effect_specialairs4s", effect_specials4s);
+    agent.acmd("effect_specials4s", effect_specials4s, Priority::Low);
+    agent.acmd("effect_specialairs4s", effect_specials4s, Priority::Low);
     
-    agent.acmd("effect_specials4lw", effect_specials4lw);
-    agent.acmd("effect_specialairs4lw", effect_specials4lw);
+    agent.acmd("effect_specials4lw", effect_specials4lw, Priority::Low);
+    agent.acmd("effect_specialairs4lw", effect_specials4lw, Priority::Low);
 }

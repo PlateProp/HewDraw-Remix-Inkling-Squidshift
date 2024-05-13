@@ -7,7 +7,7 @@ unsafe extern "C" fn game_attacks3w(agent: &mut L2CAgentBase) {
     let mut dmg = 1.0;
     if VarModule::is_flag(agent.battle_object, vars::shotos::instance::IS_MAGIC_SERIES_CANCEL) {
         attr = Hash40::new("collision_attr_fire");
-        dmg = 1.10;
+        dmg = 1.05;
     }
     if is_excute(agent) {
         boma.on_flag(*FIGHTER_RYU_INSTANCE_WORK_ID_FLAG_FINAL_HIT_CANCEL);
@@ -167,7 +167,7 @@ unsafe extern "C" fn game_attackhi3s(agent: &mut L2CAgentBase) {
     let mut dmg = 1.0;
     if VarModule::is_flag(agent.battle_object, vars::shotos::instance::IS_MAGIC_SERIES_CANCEL) {
         attr = Hash40::new("collision_attr_fire");
-        dmg = 1.10;
+        dmg = 1.05;
     }
     if is_excute(agent) {
         AttackModule::clear_all(boma);
@@ -287,7 +287,7 @@ unsafe extern "C" fn game_attacklw3w(agent: &mut L2CAgentBase) {
     let mut dmg = 1.0;
     if VarModule::is_flag(agent.battle_object, vars::shotos::instance::IS_MAGIC_SERIES_CANCEL) {
         attr = Hash40::new("collision_attr_fire");
-        dmg = 1.10;
+        dmg = 1.05;
     }
     if is_excute(agent) {
         agent.on_flag(*FIGHTER_STATUS_WORK_ID_FLAG_RESERVE_ATTACK_DISABLE_MINI_JUMP_ATTACK);
@@ -338,7 +338,7 @@ unsafe extern "C" fn game_attacklw3s(agent: &mut L2CAgentBase) {
     let mut dmg = 1.0;
     if VarModule::is_flag(agent.battle_object, vars::shotos::instance::IS_MAGIC_SERIES_CANCEL) {
         attr = Hash40::new("collision_attr_fire");
-        dmg = 1.10;
+        dmg = 1.05;
     }
     frame(lua_state, 7.0);
     if is_excute(agent) {
@@ -362,23 +362,23 @@ unsafe extern "C" fn game_attacklw3s(agent: &mut L2CAgentBase) {
 }
 
 pub fn install(agent: &mut Agent) {
-    agent.acmd("game_attacks3w", game_attacks3w);
-    agent.acmd("game_attacknearw", game_attacks3w);
-    agent.acmd("effect_attacks3w", effect_attacks3w);
-    agent.acmd("effect_attacknearw", effect_attacks3w);
-    agent.acmd("sound_attacks3w", sound_attacks3w);
-    agent.acmd("sound_attacknearw", sound_attacks3w);
-    agent.acmd("expression_attacks3w", expression_attacks3w);
-    agent.acmd("expression_attacknearw", expression_attacks3w);
-    agent.acmd("game_attacks3s", game_attacks3s);
-    agent.acmd("effect_attacks3s", effect_attacks3s);
+    agent.acmd("game_attacks3w", game_attacks3w, Priority::Low);
+    agent.acmd("game_attacknearw", game_attacks3w, Priority::Low);
+    agent.acmd("effect_attacks3w", effect_attacks3w, Priority::Low);
+    agent.acmd("effect_attacknearw", effect_attacks3w, Priority::Low);
+    agent.acmd("sound_attacks3w", sound_attacks3w, Priority::Low);
+    agent.acmd("sound_attacknearw", sound_attacks3w, Priority::Low);
+    agent.acmd("expression_attacks3w", expression_attacks3w, Priority::Low);
+    agent.acmd("expression_attacknearw", expression_attacks3w, Priority::Low);
+    agent.acmd("game_attacks3s", game_attacks3s, Priority::Low);
+    agent.acmd("effect_attacks3s", effect_attacks3s, Priority::Low);
 
-    agent.acmd("game_attackhi3w", game_attackhi3w);
-    agent.acmd("game_attackhi3s", game_attackhi3s);
-    agent.acmd("effect_attackhi3s", effect_attackhi3s);
-    agent.acmd("sound_attackhi3s", sound_attackhi3s);
-    agent.acmd("expression_attackhi3s", expression_attackhi3s);
+    agent.acmd("game_attackhi3w", game_attackhi3w, Priority::Low);
+    agent.acmd("game_attackhi3s", game_attackhi3s, Priority::Low);
+    agent.acmd("effect_attackhi3s", effect_attackhi3s, Priority::Low);
+    agent.acmd("sound_attackhi3s", sound_attackhi3s, Priority::Low);
+    agent.acmd("expression_attackhi3s", expression_attackhi3s, Priority::Low);
 
-    agent.acmd("game_attacklw3w", game_attacklw3w);
-    agent.acmd("game_attacklw3s", game_attacklw3s);
+    agent.acmd("game_attacklw3w", game_attacklw3w, Priority::Low);
+    agent.acmd("game_attacklw3s", game_attacklw3s, Priority::Low);
 }
